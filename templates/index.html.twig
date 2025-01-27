@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    
+    <section>
+        <hgroup>
+            <h1>Debug Form</h1>
+            <p>Foo Bar Blop</p>
+        </hgroup>
+    </section>
+    
+    <section class="grid">
+        
+        <article>
+            <header><h3>Turbo Form A</h3></header>
+            <div>
+                {{ form(turbo_form) }}
+                <button type="submit">Submit</button>
+            </div>
+            <footer class="grid">
+            </footer>
+        </article>
+        
+        <article>
+            <header><h3>Live Form</h3></header>
+            <div>
+                
+                <button type="submit">Submit</button>
+            </div>
+            <footer class="grid">
+                <div class="grid">
+                    
+                </div>
+            </footer>
+        </article>
+        
+    </section>
+
+    
+    {# End of the #}    
+{% endblock %}
