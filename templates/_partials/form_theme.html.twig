@@ -1,6 +1,31 @@
 {% use 'form_div_layout.html.twig' %}
 
-{% block form_errors %}
-    {% set attr = {...attr, class: [attr.class|default, 'form_errors']|join(' ') }  %}
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        {%- for error in errors -%}
+            <small>{{ error.message }}</small><br />
+        {%- endfor -%}
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+
+{%- block form_row -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_label(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_errors(form) -}}
+        {{- form_help(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{% block form_widget %}
+    {% set attr = {
+        ...attr,
+        'aria-invalid': (errors|length > 0 ? 'true' : null),
+    } %}
     {{ parent() }}
 {% endblock %}

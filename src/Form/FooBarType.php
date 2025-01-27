@@ -5,6 +5,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,6 +18,7 @@ class FooBarType extends AbstractType
     {
         $builder
             ->add('input', TextType::class, [
+                'required' => false,
                 'label' => 'Input',
                 'constraints' => [
                     new Length(max: 2),
@@ -29,6 +31,9 @@ class FooBarType extends AbstractType
                     '422 - Validation Error' => 422,
                     '418 - Teapot' => 418,
                 ],
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Submit',
             ])
         ;
     }

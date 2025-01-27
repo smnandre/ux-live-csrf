@@ -2,3 +2,12 @@ body {
 }
 .container {
 }
+
+
+turbo-frame {
+  position: relative;
+  &::before, :is(form)::before {
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+}

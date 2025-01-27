@@ -3,57 +3,65 @@
     
     <section class="grid">
         
-         <article data-controller="debug-form">
-            <header><h3>Turbo Form</h3></header>
-            {{ form_start(form_turbo) }}
-                {{ form_errors(form_turbo) }}
-                <div role="group">
-                    {% if form_turbo._token is defined %}
-                        {{ form_row(form_turbo._token, {attr: {'data-debug-form-target': 'csrf'} }) }}
-                    {% endif %}
-                    {{ form(form_turbo.success) }}
-                    <button type="submit" class="">Submit</button>
-                </div>
-                {{ form_rest(form_turbo) }}
-            {{ form_end(form_turbo) }}
-            <footer class="grid" id="form-turbo-footer" data-live-ignore="true">
+         <article data-controller="debug-form" data-turbo="off">
+            <header><h3>Base Form (Turbo off)</h3></header>
+             {{ include('_form.html.twig', {form: form_base}) }}
+            <footer class="grid" id="form-base-footer">
                 {{ _self._debug_csrf() }}
             </footer>
         </article>
         
         <article data-controller="debug-form">
-            <header><h3>Live Form</h3></header>
-            {{ form_start(form_live) }}
-                {{ form_errors(form_live) }}
-                <div role="group">
-                    {% if form_live._token is defined %}
-                        {{ form_row(form_live._token, {attr: {'data-debug-form-target': 'csrf'} }) }}
-                    {% endif %}
-                    {{ form(form_live.success) }}
-                    <button type="submit" class="">Submit</button>
-                </div>
-                {{ form_rest(form_live) }}
-            {{ form_end(form_live) }}
-            <footer class="grid" id="form-live-footer" data-live-ignore="true">
+            <header><h3>Base Form (Turbo on)</h3></header>
+             {{ include('_form.html.twig', {form: form_turbo}) }}
+            <footer class="grid" id="form-turbo-footer">
                 {{ _self._debug_csrf() }}
             </footer>
         </article>
+        
+    </section>
+    
+    
+    <section class="grid">
+        
+          <article data-controller="debug-form">
+            <header><h3>Live Form</h3></header>
+             <twig:FooBar  />
+            <footer class="grid" id="form-live-footer">
+                {{ _self._debug_csrf() }}
+            </footer>
+        </article>
+        
+        <turbo-frame id="form-live-frame">
+             <article data-controller="debug-form">
+                <header><h3>Turbo Frame</h3></header>
+                 {{ include('_form.html.twig', {form: form_turbo_frame}) }}
+                <footer class="grid" id="form-turbo-frame-footer" data-turbo-persist>
+                    {{ _self._debug_csrf() }}
+                </footer>
+            </article>
+        </turbo-frame>
         
     </section>
 
     
     {% macro _debug_csrf() %}
         <div>
-            <label>csrf name</label>
+            <label>previous csrf value</label>
             <input data-debug-form-target="previousCsrfValue" 
                    type="text" value="" readonly disabled  />
         </div>
         <div>
-            <label>csrf value</label>
+            <label>current csrf value</label>
             <input data-debug-form-target="currentCsrfValue" 
                    type="text" value="" readonly disabled />
         </div>
     {% endmacro %}
+
+    
+    
     
     {# End of the #}    
 {% endblock %}
+
+
